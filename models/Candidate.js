@@ -29,7 +29,7 @@ const candidateSchema = new mongoose.Schema({
   enum: ['Employed', 'Unemployed', 'Student'],
   required: true
 },
-  other_status: String,
+  father_name: String,
   yearly_income_of_the_candidate_in_rs: Number,
 
   educational_qualification: String,
