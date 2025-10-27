@@ -1,21 +1,61 @@
-const mongoose = require("mongoose");
+// models/InternalAssessment.js
 
-const candidateAssessmentSchema = new mongoose.Schema({
-  candidateId: { type: String, required: true },
-  name: { type: String }, // optional but recommended for views
-  assessmentDate: { type: Date, required: true },
-  trainerName: { type: String, required: true },
-  marksObtained: { type: Number, required: true },
-  totalMarks: { type: Number, required: true },
-  remarks: { type: String }
-}, { _id: false });
+const mongoose = require('mongoose');
 
 const internalAssessmentSchema = new mongoose.Schema(
   {
-    batchId: { type: String, required: true, index: true, unique: true },
-    assessments: { type: [candidateAssessmentSchema], default: [] }
+    batchId: {
+      type: String,
+      required: true,
+    unique: false
+    },
+    candidateId: {
+      type: String,
+      required: true,
+     unique: false
+    },
+    assessmentDate: {
+      type: Date,
+      required: true
+    },
+    examName: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    subjectName: {
+      type: String,
+      required: true,
+      trim: true
+    },
+    marksObtained: {
+      type: Number,
+      required: true,
+      min: 0
+    },
+    outOf: {
+      type: Number,
+      required: true,
+      min: 1
+    },
+    passFail: {
+      type: String,
+      enum: ['pass', 'fail'],
+      default: 'pass'
+    },
+    remarks: {
+      type: String,
+      default: '',
+      trim: true
+    }
   },
-  { timestamps: true }
+  {
+    timestamps: true
+  }
 );
+
+// ✅ Composite index for better query performance (NON-UNIQUE)
+internalAssessmentSchema.index({ batchId: 1, candidateId: 1 });
+internalAssessmentSchema.index({ assessmentDate: 1 });
 
 module.exports = mongoose.model('InternalAssessment', internalAssessmentSchema);
