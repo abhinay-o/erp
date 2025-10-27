@@ -1,4 +1,4 @@
-
+// path - C:\Users\saxen\OneDrive\Documents\ERP-Project\backend\controllers\internalAssessmentController.js
 const InternalAssessment = require("../models/InternalAssessment");
 
 // Create or replace the entire assessments array for a batch (idempotent upsert)
